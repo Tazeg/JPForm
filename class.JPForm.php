@@ -33,7 +33,7 @@ class JPForm
 		}
 		
 	// return the HTML code for a input type text with given caracteristics
-	private function getHTMLtext($carac)
+	private static function getHTMLtext($carac)
 		{
 		return $carac['label'].'<br />'.PHP_EOL.'<input type="text" name="'.$carac['name'].'" value="'.$carac['val'].'" size="'.$carac['size'].'" /><br />'.PHP_EOL;
 		}
@@ -51,7 +51,7 @@ class JPForm
 		}		
 	
 	// return the HTML code for a textarea with given caracteristics
-	private function getHTMLtextarea($carac)
+	private static function getHTMLtextarea($carac)
 		{
 		return $carac['label'].'<br /><textarea name="'.$carac['name'].'" rows="'.$carac['rows'].'" cols="'.$carac['cols'].'">'.$carac['val'].'</textarea><br />'.PHP_EOL;
 		}
@@ -65,7 +65,7 @@ class JPForm
 		}
 	
 	// return the HTML code for a submit button
-	private function getHTMLsubmit($carac)
+	private static function getHTMLsubmit($carac)
 		{
 		return '<input type="submit" name="'.$carac['name'].'" value="'.$carac['val'].'" /><br />'.PHP_EOL;
 		}		
