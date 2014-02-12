@@ -21,6 +21,9 @@ $myform->addText('email','','','required|email');
 $myform->addFreeText('Your message<br>');
 $myform->addTextarea('message','',10,20,'required');
 
+$myform->addFreeText('Your web site<br>');
+$myform->addText('website','',40,'url');
+
 $myform->addFreeText('Your birthday<br>');
 $myform->addSelect('day','required|integer');
 for($i=1;$i<=31;$i++) 

@@ -194,6 +194,14 @@ class JPForm
 						$this->_errors.="$frmItem is not a valid email.<br>";
 						}
 					break;
+
+					case 'url':
+					if(!empty($this->_data[$frmItem]) && !filter_var($this->_data[$frmItem], FILTER_VALIDATE_URL))
+						{
+						$r=false;
+						$this->_errors.="$frmItem is not a URL.<br>";
+						}
+					break;	
 					
 					case 'numeric':
 					$this->_data[$frmItem]=str_replace(',','.',$this->_data[$frmItem]); // yes, in France we use a coma ;-)
