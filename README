@@ -1,5 +1,5 @@
 JPForm is a PHP class to make it simple with HTML forms.
-It supports actually input type TEXT and TEXTAREA, and of course SUBMIT button.
+It supports actually input type TEXT, TEXTAREA, SELECT and of course SUBMIT button.
 It can check validation rules for each item.
 Those rules are 'required|email|numeric|integer'.
 You can combine none of several.
