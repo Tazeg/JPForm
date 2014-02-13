@@ -42,25 +42,57 @@ class JPForm
 		}
 			
 	//---------------------------------------------------------------------------------------------------------
-	// input type text
+	// input type TEXT
 	//---------------------------------------------------------------------------------------------------------
 	
-	public function addText($name,$val,$size=30,$rules) 
+	public function addText($name,$val,$size,$maxlength,$rules) 
 		{
 		$this->_items[$name]['type']='text';
 		$this->_items[$name]['name']=$name;
 		$this->_items[$name]['val']=$val;
 		$this->_items[$name]['size']=$size;
+		$this->_items[$name]['maxlength']=$maxlength;
 		$this->_items[$name]['rules']=$rules;		
 		}
 		
 	// return the HTML code for a input type text with given caracteristics
 	private static function getHTMLtext($carac)
 		{
-		return '<input type="text" name="'.$carac['name'].'" value="'.$carac['val'].'" size="'.$carac['size'].'">'.PHP_EOL;
+		$r='';
+		$r.='<input type="text" name="'.$carac['name'].'"';
+		if(!empty($carac['size'])) {$r.=' size="'.$carac['size'].'"';}
+		if(!empty($carac['val'])) {$r.=' value="'.$carac['val'].'"';}
+		if(!empty($carac['maxlength'])) {$r.=' maxlength="'.$carac['maxlength'].'"';}
+		$r.='>'.PHP_EOL;
+		return $r;
 		}
 		
+	//---------------------------------------------------------------------------------------------------------
+	// input type PASSWORD
+	//---------------------------------------------------------------------------------------------------------
 		
+	public function addPassword($name,$val,$size,$maxlength,$rules)
+		{
+		$this->_items[$name]['type']='password';
+		$this->_items[$name]['name']=$name;
+		$this->_items[$name]['val']=$val;
+		$this->_items[$name]['size']=$size;
+		$this->_items[$name]['maxlength']=$maxlength;
+		$this->_items[$name]['rules']=$rules;
+		}
+		
+	// return the HTML code for a input type text with given caracteristics
+	private static function getHTMLpassword($carac)
+		{
+		$r='';
+		$r.='<input type="password" name="'.$carac['name'].'"';
+		if(!empty($carac['size'])) {$r.=' size="'.$carac['size'].'"';}
+		if(!empty($carac['val'])) {$r.=' value="'.$carac['val'].'"';}
+		if(!empty($carac['maxlength'])) {$r.=' maxlength="'.$carac['maxlength'].'"';}
+		$r.='>'.PHP_EOL;
+		return $r;
+		}
+				
 	//---------------------------------------------------------------------------------------------------------
 	// input type RADIO
 	//---------------------------------------------------------------------------------------------------------
