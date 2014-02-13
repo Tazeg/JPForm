@@ -20,21 +20,22 @@ class JPForm
 	
 	public function __construct($action,$method)
 		{
-		$this->_html='<form action="'.$action.'" method="'.$method.'" />'.PHP_EOL;;
+		$this->_html='<form action="'.$action.'" method="'.$method.'">'.PHP_EOL;;
 		$this->_errors="";
 		}
 		
 	//---------------------------------------------------------------------------------------------------------
-	// Labels, or any free HTML code you want to add within the HTML code
+	// Labels, or any free HTML code you want to add within the <FORM> code
 	//---------------------------------------------------------------------------------------------------------
 	
 	public function addFreeText($label)
 		{
-		$this->_items[$label]['type']='freeText';
-		$this->_items[$label]['val']=$label;
+		$id=count($this->_items);
+		$this->_items[$id]['type']='freeText';
+		$this->_items[$id]['val']=$label;
 		}
 		
-	// return the HTML code for a this free text
+	// return the HTML code for free text
 	private static function getHTMLfreeText($carac)
 		{
 		return $carac['val'].PHP_EOL;
@@ -44,7 +45,7 @@ class JPForm
 	// input type text
 	//---------------------------------------------------------------------------------------------------------
 	
-	public function addText($name,$val="",$size=30,$rules) 
+	public function addText($name,$val,$size=30,$rules) 
 		{
 		$this->_items[$name]['type']='text';
 		$this->_items[$name]['name']=$name;
@@ -56,11 +57,61 @@ class JPForm
 	// return the HTML code for a input type text with given caracteristics
 	private static function getHTMLtext($carac)
 		{
-		return '<input type="text" name="'.$carac['name'].'" value="'.$carac['val'].'" size="'.$carac['size'].'" /><br />'.PHP_EOL;
+		return '<input type="text" name="'.$carac['name'].'" value="'.$carac['val'].'" size="'.$carac['size'].'">'.PHP_EOL;
 		}
 		
+		
 	//---------------------------------------------------------------------------------------------------------
-	// select
+	// input type RADIO
+	//---------------------------------------------------------------------------------------------------------
+		
+	public function addRadio($name,$rules)
+		{
+		$this->_items[$name]['type']='radio';
+		$this->_items[$name]['name']=$name;
+		$this->_items[$name]['rules']=$rules;
+		$this->_items[$name]['options']=array();
+		}
+	
+	public function addRadioOption($parent,$val,$label,$selected=false)
+		{
+		while (list($key, $value) = each($this->_items))
+			{
+			if($key!=$parent) {continue;}
+			while (list($key2, $value2) = each($value))
+				{
+				if($key2!='options') {continue;}
+				$this->_items[$key][$key2][]="$val|$label|$selected"; 
+				}
+			reset($value);
+			}	
+		reset($this->_items);	
+		}
+				
+	// return the HTML code for a type radio
+	private static function getHTMLradio($carac)
+		{
+		$r='';
+
+		while (list($key, $value) = each($carac))
+			{
+			if($key!='options') {continue;}
+			while (list($key2, $value2) = each($value))
+				{
+				list($val,$label,$selected)=explode("|",$value2);
+				$r.='<input type="radio" name="'.$carac['name'].'" value="'.$val.'"';
+				if($selected) {$r.=' checked';}
+				$r.='>'.$label.PHP_EOL;
+				}
+			reset($value);
+			}	
+		reset($carac);
+				
+		return $r;
+		}
+				
+	//---------------------------------------------------------------------------------------------------------
+	// SELECT
 	//---------------------------------------------------------------------------------------------------------
 	
 	public function addSelect($name,$rules)
@@ -111,7 +162,7 @@ class JPForm
 		}
 		
 	//---------------------------------------------------------------------------------------------------------
-	// textarea
+	// TEXTAREA
 	//---------------------------------------------------------------------------------------------------------
 		 	
 	function addTextarea($name,$val,$rows,$cols,$rules)
@@ -127,11 +178,11 @@ class JPForm
 	// return the HTML code for a textarea with given caracteristics
 	private static function getHTMLtextarea($carac)
 		{
-		return '<textarea name="'.$carac['name'].'" rows="'.$carac['rows'].'" cols="'.$carac['cols'].'">'.$carac['val'].'</textarea><br />'.PHP_EOL;
+		return '<textarea name="'.$carac['name'].'" rows="'.$carac['rows'].'" cols="'.$carac['cols'].'">'.$carac['val'].'</textarea>'.PHP_EOL;
 		}
 		
 	//---------------------------------------------------------------------------------------------------------
-	// submit button
+	// SUBMIT button
 	//---------------------------------------------------------------------------------------------------------
 				
 	function addBtSubmit($val="Submit",$name="Submit",$class='')
@@ -147,7 +198,7 @@ class JPForm
 		{
 		$r='<input type="submit"';
 		if(!empty($carac['class'])) {$r.=' class="'.$carac['class'].'"';}
-		$r.=' name="'.$carac['name'].'" value="'.$carac['val'].'" /><br />'.PHP_EOL;
+		$r.=' name="'.$carac['name'].'" value="'.$carac['val'].'">'.PHP_EOL;
 		return $r;
 		}		
 		
@@ -183,7 +234,7 @@ class JPForm
 					if(!isset($this->_data[$frmItem]) || empty($this->_data[$frmItem])) 
 						{
 						$r=false;
-						$this->_errors.="Please enter $frmItem.<br>";
+						$this->_errors.='<font color="#FF0000">Please enter '.$frmItem.'.</font><br>';
 						}
 					break;
 					
@@ -191,7 +242,7 @@ class JPForm
 					if(!empty($this->_data[$frmItem]) && !filter_var($this->_data[$frmItem], FILTER_VALIDATE_EMAIL))
 						{
 						$r=false;
-						$this->_errors.="$frmItem is not a valid email.<br>";
+						$this->_errors.='<font color="#FF0000">'.$frmItem.' is not a valid email.</font><br>';
 						}
 					break;
 
@@ -199,16 +250,16 @@ class JPForm
 					if(!empty($this->_data[$frmItem]) && !filter_var($this->_data[$frmItem], FILTER_VALIDATE_URL))
 						{
 						$r=false;
-						$this->_errors.="$frmItem is not a URL.<br>";
+						$this->_errors.='<font color="#FF0000">'.$frmItem.' is not a URL.</font><br>';
 						}
 					break;	
 					
 					case 'numeric':
-					$this->_data[$frmItem]=str_replace(',','.',$this->_data[$frmItem]); // yes, in France we use a coma ;-)
+					$this->_data[$frmItem]=str_replace(',','.',$this->_data[$frmItem]);
 					if(!is_numeric($this->_data[$frmItem]))
 						{
 						$r=false;
-						$this->_errors.="$frmItem is not numeric.<br>";
+						$this->_errors.='<font color="#FF0000">'.$frmItem.' is not numeric.</font><br>';
 						}
 					break;		
 
@@ -216,7 +267,7 @@ class JPForm
 					if(!preg_match('/^\d+$/',$this->_data[$frmItem]))
 						{
 						$r=false;
-						$this->_errors.="$frmItem is not an integer.<br>";
+						$this->_errors.='<font color="#FF0000">'.$frmItem.' is not an integer.</font><br>';
 						}
 					break;					
 					}
@@ -237,6 +288,29 @@ class JPForm
 		}
 	
 	//---------------------------------------------------------------------------------------------------------
+	// set posted values to RADIO and SELECT to fill form with those as default
+	//---------------------------------------------------------------------------------------------------------
+	
+	private function changeSelectedValue($name,$valueSentByForm)
+		{
+		while (list($key, $value) = each($this->_items[$name]['options']))
+			{	
+			// delete the default form selected
+			if(preg_match('/\|1$/',$value)) 
+				{
+				$value=substr($value,0,-1);
+				$this->_items[$name]['options'][$key]=$value;
+				}
+			// set as default the posted value by user
+			if(preg_match("/^$valueSentByForm\|/",$value))
+				{
+				$this->_items[$name]['options'][$key]=$value.'1';
+				}
+			}
+		reset($this->_items[$name]['options']);
+		}
+		
+	//---------------------------------------------------------------------------------------------------------
 	// display the form
 	//---------------------------------------------------------------------------------------------------------
 		
@@ -244,9 +318,14 @@ class JPForm
 		{		
 		while (list($frmItem, $param) = each($this->_items))
 			{
-			if(isset($this->_data[$frmItem])) {$param['val']=$this->_data[$frmItem];} // to fill textarea and text with values submitted
+			// to fill form with posted values
+			if(isset($this->_data[$frmItem]))
+				{
+				if($param['type']=='radio' || $param['type']=='select') {self::changeSelectedValue($param['name'],$this->_data[$frmItem]);}
+				else {$this->_items[$frmItem]['val']=$this->_data[$frmItem];}
+				} 
 			$functionname='getHTML'.$param['type'];
-			$this->_html.=self::$functionname($param);
+			$this->_html.=self::$functionname($this->_items[$frmItem]);
 			}
 		$this->_html.='</form>';
 		reset($this->_items);
