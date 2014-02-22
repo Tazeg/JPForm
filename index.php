@@ -54,6 +54,8 @@ $myform->addSelect('year','required|integer');
 for($i=$today_year;$i>$today_year-100;$i--) {$myform->addSelectOption('year',$i,$i,($today_year==$i));}
 $myform->addFreeText('<br>');
 
+$myform->addHidden('id','45',''); // name,value,rules
+
 $myform->addBtSubmit('Envoyer'); // value,name,CSS (i.e. : class='myclass')
 
 // the form has been submitted

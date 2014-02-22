@@ -68,6 +68,28 @@ class JPForm
 		}
 		
 	//---------------------------------------------------------------------------------------------------------
+	// input type HIDDEN
+	//---------------------------------------------------------------------------------------------------------
+	
+	public function addHidden($name,$val,$rules) 
+		{
+		$this->_items[$name]['type']='hidden';
+		$this->_items[$name]['name']=$name;
+		$this->_items[$name]['val']=$val;
+		$this->_items[$name]['rules']=$rules;		
+		}
+		
+	// return the HTML code for a input type text with given caracteristics
+	private static function getHTMLhidden($carac)
+		{
+		$r='';
+		$r.='<input type="hidden" name="'.$carac['name'].'"';
+		if(!empty($carac['val'])) {$r.=' value="'.$carac['val'].'"';}
+		$r.='>'.PHP_EOL;
+		return $r;
+		}
+		
+	//---------------------------------------------------------------------------------------------------------
 	// input type PASSWORD
 	//---------------------------------------------------------------------------------------------------------
 		
@@ -316,7 +338,7 @@ class JPForm
 	
 	public function getErrors()
 		{
-		return $this->_errors.'<br>';
+		return $this->_errors;
 		}
 	
 	//---------------------------------------------------------------------------------------------------------
