@@ -54,6 +54,14 @@ $myform->addSelect('year','required|integer');
 for($i=$today_year;$i>$today_year-100;$i--) {$myform->addSelectOption('year',$i,$i,($today_year==$i));}
 $myform->addFreeText('<br>');
 
+$myform->addFreeText('Your favorites sports<br>');
+$myform->addCheckbox('sport_natation','natation',true,''); // name,val,isChecked,rules
+$myform->addFreeText('Natation<br>');
+$myform->addCheckbox('sport_soccer','soccer',false,''); // name,val,isChecked,rules
+$myform->addFreeText('Soccer<br>');
+$myform->addCheckbox('sport_ski','ski',false,''); // name,val,isChecked,rules
+$myform->addFreeText('Ski<br>');
+
 $myform->addHidden('id','45',''); // name,value,rules
 
 $myform->addBtSubmit('Envoyer'); // value,name,CSS (i.e. : class='myclass')

@@ -68,6 +68,31 @@ class JPForm
 		}
 		
 	//---------------------------------------------------------------------------------------------------------
+	// input type CHECKBOXES
+	//---------------------------------------------------------------------------------------------------------
+	
+	public function addCheckbox($name,$val,$isChecked,$rules) 
+		{
+		$this->_items[$name]['type']='checkbox';
+		$this->_items[$name]['name']=$name;
+		$this->_items[$name]['val']=$val;
+		$this->_items[$name]['checked']=$isChecked;
+		$this->_items[$name]['rules']=$rules;		
+		}
+		
+	// return the HTML code for a input type text with given caracteristics
+	private static function getHTMLcheckbox($carac)
+		{
+		$r='';
+		$r.='<input type="checkbox" name="'.$carac['name'].'"';
+		if(!empty($carac['val'])) {$r.=' value="'.$carac['val'].'"';}
+		if($carac['checked']) {$r.=' checked';}
+		$r.='>'.PHP_EOL;
+		return $r;
+		}
+		
+
+	//---------------------------------------------------------------------------------------------------------
 	// input type HIDDEN
 	//---------------------------------------------------------------------------------------------------------
 	
@@ -372,11 +397,15 @@ class JPForm
 		{		
 		while (list($frmItem, $param) = each($this->_items))
 			{
-			// to fill form with posted values
-			if(isset($this->_data[$frmItem]))
+			if(count($this->_data)>0) // to fill form with posted values
 				{
-				if($param['type']=='radio' || $param['type']=='select') {self::changeSelectedValue($param['name'],$this->_data[$frmItem]);}
-				else {$this->_items[$frmItem]['val']=$this->_data[$frmItem];}
+				$this->_items[$frmItem]['checked']=0;
+				if(isset($this->_data[$frmItem])) 
+					{
+					if($param['type']=='radio' || $param['type']=='select') {self::changeSelectedValue($param['name'],$this->_data[$frmItem]);}
+					else if($param['type']=='checkbox') {$this->_items[$frmItem]['checked']=1;}
+					else {$this->_items[$frmItem]['val']=$this->_data[$frmItem];}
+					}
 				} 
 			$functionname='getHTML'.$param['type'];
 			$this->_html.=self::$functionname($this->_items[$frmItem]);
