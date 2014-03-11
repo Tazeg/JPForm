@@ -52,13 +52,14 @@ class JPForm
 	// input type TEXT
 	//---------------------------------------------------------------------------------------------------------
 	
-	public function addText($name,$val,$size,$maxlength,$rules) 
+	public function addText($name,$val,$size,$maxlength,$class,$rules) 
 		{
 		$this->_items[$name]['type']='text';
 		$this->_items[$name]['name']=$name;
 		$this->_items[$name]['val']=$val;
 		$this->_items[$name]['size']=$size;
 		$this->_items[$name]['maxlength']=$maxlength;
+		$this->_items[$name]['class']=$class;
 		$this->_items[$name]['rules']=$rules;		
 		}
 		
@@ -69,6 +70,7 @@ class JPForm
 		$r.='<input type="text" name="'.$carac['name'].'"';
 		if(!empty($carac['size'])) {$r.=' size="'.$carac['size'].'"';}
 		if(!empty($carac['val'])) {$r.=' value="'.$carac['val'].'"';}
+		if(!empty($carac['class'])) {$r.=' class="'.$carac['class'].'"';}
 		if(!empty($carac['maxlength'])) {$r.=' maxlength="'.$carac['maxlength'].'"';}
 		$r.='>'.PHP_EOL;
 		return $r;
@@ -200,10 +202,11 @@ class JPForm
 	// SELECT
 	//---------------------------------------------------------------------------------------------------------
 	
-	public function addSelect($name,$rules)
+	public function addSelect($name,$class,$rules)
 		{
 		$this->_items[$name]['type']='select';
 		$this->_items[$name]['name']=$name;
+		$this->_items[$name]['class']=$class;
 		$this->_items[$name]['rules']=$rules;
 		$this->_items[$name]['options']=array();
 		}
@@ -226,7 +229,9 @@ class JPForm
 	// return the HTML code for a type select
 	private static function getHTMLselect($carac)
 		{
-		$r='<select name="'.$carac['name'].'">'.PHP_EOL;
+		$r='<select name="'.$carac['name'].'"';
+		if(!empty($carac['class'])) {$r.=' class="'.$carac['class'].'"';}
+		$r.='>'.PHP_EOL;
 		
 		while (list($key, $value) = each($carac))
 			{
