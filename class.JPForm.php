@@ -365,7 +365,7 @@ class JPForm
 					break;		
 
 					case 'integer':
-					if(!preg_match('/^\d+$/',$this->_data[$frmItem]))
+					if(!preg_match('/^-?\d+$/',$this->_data[$frmItem]))
 						{
 						$r=false;
 						$this->_errors.='<font color="#FF0000">'.$frmItem.' is not an integer.</font><br>';
