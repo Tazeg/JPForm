@@ -13,6 +13,8 @@ class JPForm
 	private $_data; 	// data sent by form (POST or GET)
 	private $_errors;	// error messages from validation rules
 	private $_items;	// text, textarea, select, and values (name,size,cols,rows...)
+	private $_sha1;
+	private $_method;
 	
 	//---------------------------------------------------------------------------------------------------------
 	// constructor called with i.e. : $myform=new JPForm('index.php','POST');
@@ -20,7 +22,12 @@ class JPForm
 	
 	public function __construct($action,$method)
 		{
-		$this->_html='<form action="'.$action.'" method="'.$method.'">'.PHP_EOL;;
+		$method=strtoupper($method);
+		if(!($method=="POST" || $method=="GET")) {echo 'JPForm() : Method must be POST or GET'; return;}
+		$this->_method=$method;
+		$this->_sha1=sha1($action.$method);
+		$this->_html='<form class="form-horizontal" action="'.$action.'" method="'.$method.'">'.PHP_EOL;
+		$this->_html.='<input type="hidden" name="JPFormCheck" value="'.$this->_sha1.'">'.PHP_EOL;
 		$this->_errors="";
 		}
 		
@@ -287,8 +294,23 @@ class JPForm
 	
 	public function isSubmitted()
 		{
-		if(count($_POST)>0) {$this->_data=$_POST; return true;}
-		if(count($_GET)>0) {$this->_data=$_GET; return true;}
+		switch($this->_method)
+			{
+			case 'POST':
+			if(isset($_POST['JPFormCheck'])) 
+				{
+				if($_POST['JPFormCheck']==$this->_sha1) {$this->_data=$_POST; return true;}
+				}
+			break;
+
+			case 'GET':
+			if(isset($_GET['JPFormCheck'])) 
+				{
+				if($_GET['JPFormCheck']==$this->_sha1) {$this->_data=$_GET; return true;}
+				}
+			break;
+			}
+
 		return false;
 		}
 		
