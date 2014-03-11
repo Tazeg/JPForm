@@ -1,10 +1,10 @@
 <?php
 //-----------------------------------------------------------------------
-//	AUTOR	: Jean-Francois GAZET
-//	WEB 	: http://www.jeffprod.com
+//  AUTHOR	: Jean-Francois GAZET
+//  WEB 	: http://www.jeffprod.com
 //  TWITTER	: @JeffProd
 //  MAIL	: jeffgazet@gmail.com
-//  LICENCE : GNU GENERAL PUBLIC LICENSE Version 2, June 1991
+//  LICENCE 	: GNU GENERAL PUBLIC LICENSE Version 2, June 1991
 //-----------------------------------------------------------------------
 
 class JPForm
@@ -69,7 +69,7 @@ class JPForm
 		$r='';
 		$r.='<input type="text" name="'.$carac['name'].'"';
 		if(!empty($carac['size'])) {$r.=' size="'.$carac['size'].'"';}
-		if(!empty($carac['val'])) {$r.=' value="'.$carac['val'].'"';}
+		if(isset($carac['val'])) {$r.=' value="'.$carac['val'].'"';}
 		if(!empty($carac['class'])) {$r.=' class="'.$carac['class'].'"';}
 		if(!empty($carac['maxlength'])) {$r.=' maxlength="'.$carac['maxlength'].'"';}
 		$r.='>'.PHP_EOL;
@@ -94,7 +94,7 @@ class JPForm
 		{
 		$r='';
 		$r.='<input type="checkbox" name="'.$carac['name'].'"';
-		if(!empty($carac['val'])) {$r.=' value="'.$carac['val'].'"';}
+		if(isset($carac['val'])) {$r.=' value="'.$carac['val'].'"';}
 		if($carac['checked']) {$r.=' checked';}
 		$r.='>'.PHP_EOL;
 		return $r;
@@ -118,7 +118,7 @@ class JPForm
 		{
 		$r='';
 		$r.='<input type="hidden" name="'.$carac['name'].'"';
-		if(!empty($carac['val'])) {$r.=' value="'.$carac['val'].'"';}
+		if(isset($carac['val'])) {$r.=' value="'.$carac['val'].'"';}
 		$r.='>'.PHP_EOL;
 		return $r;
 		}
@@ -143,7 +143,7 @@ class JPForm
 		$r='';
 		$r.='<input type="password" name="'.$carac['name'].'"';
 		if(!empty($carac['size'])) {$r.=' size="'.$carac['size'].'"';}
-		if(!empty($carac['val'])) {$r.=' value="'.$carac['val'].'"';}
+		if(isset($carac['val'])) {$r.=' value="'.$carac['val'].'"';}
 		if(!empty($carac['maxlength'])) {$r.=' maxlength="'.$carac['maxlength'].'"';}
 		$r.='>'.PHP_EOL;
 		return $r;
@@ -337,7 +337,7 @@ class JPForm
 				switch($valueOne)
 					{
 					case 'required':
-					if(!isset($this->_data[$frmItem]) || empty($this->_data[$frmItem])) 
+					if(!isset($this->_data[$frmItem]) || $this->_data[$frmItem]=='') 
 						{
 						$r=false;
 						$this->_errors.='<font color="#FF0000">Please enter '.$frmItem.'.</font><br>';
