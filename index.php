@@ -19,7 +19,7 @@ $myform->addText('name','',40,30,'','required'); // name,value,size,maxlength,CS
 $myform->addFreeText('<br>');
 
 $myform->addFreeText('Your password (8 chars)<br>');
-$myform->addPassword('passwd','',20,8,'required'); // name,value,size,maxlength,rules
+$myform->addPassword('passwd','',20,8); // name,value,size,maxlength,css,rules
 $myform->addFreeText('<br>');
 
 $myform->addFreeText('Your mail<br>');
@@ -55,11 +55,11 @@ for($i=$today_year;$i>$today_year-100;$i--) {$myform->addSelectOption('year',$i,
 $myform->addFreeText('<br>');
 
 $myform->addFreeText('Your favorites sports<br>');
-$myform->addCheckbox('sport_natation','natation',true,''); // name,val,isChecked,rules
+$myform->addCheckbox('sport_natation','natation',true); // name,val,isChecked,css,rules
 $myform->addFreeText('Natation<br>');
-$myform->addCheckbox('sport_soccer','soccer',false,''); // name,val,isChecked,rules
+$myform->addCheckbox('sport_soccer','soccer',false); // name,val,isChecked,css,rules
 $myform->addFreeText('Soccer<br>');
-$myform->addCheckbox('sport_ski','ski',false,''); // name,val,isChecked,rules
+$myform->addCheckbox('sport_ski','ski',false); // name,val,isChecked,css,rules
 $myform->addFreeText('Ski<br>');
 
 $myform->addHidden('id','45',''); // name,value,rules
