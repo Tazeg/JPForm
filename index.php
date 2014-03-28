@@ -6,7 +6,7 @@
 //  MAIL	: jeffgazet@gmail.com
 //  LICENCE 	: GNU GENERAL PUBLIC LICENSE Version 2, June 1991
 //-----------------------------------------------------------------------
-
+ 
 require 'class.JPForm.php';
 
 date_default_timezone_set('Europe/Paris');

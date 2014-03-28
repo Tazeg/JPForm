@@ -62,7 +62,7 @@ class JPForm
 		$this->_items[$name]['class']=$class;
 		$this->_items[$name]['rules']=$rules;		
 		}
-		
+		 
 	// return the HTML code for a input type text with given caracteristics
 	private static function getHTMLtext($carac)
 		{
