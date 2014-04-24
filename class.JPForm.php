@@ -371,7 +371,7 @@ class JPForm
 					
 					case 'numeric':
 					$this->_data[$frmItem]=str_replace(',','.',$this->_data[$frmItem]);
-					if(!is_numeric($this->_data[$frmItem]))
+					if(!empty($this->_data[$frmItem]) && !is_numeric($this->_data[$frmItem]))
 						{
 						$r=false;
 						$this->_errors.='<font color="#FF0000">'.$frmItem.' is not numeric.</font><br>';
@@ -379,7 +379,7 @@ class JPForm
 					break;		
 
 					case 'integer':
-					if(!preg_match('/^-?\d+$/',$this->_data[$frmItem]))
+					if(!empty($this->_data[$frmItem]) && !preg_match('/^-?\d+$/',$this->_data[$frmItem]))
 						{
 						$r=false;
 						$this->_errors.='<font color="#FF0000">'.$frmItem.' is not an integer.</font><br>';
