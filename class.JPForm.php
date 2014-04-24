@@ -260,12 +260,13 @@ class JPForm
 	// TEXTAREA
 	//---------------------------------------------------------------------------------------------------------
 		 	
-	function addTextarea($name,$val,$rows,$cols,$rules)
+	function addTextarea($name,$val,$rows,$cols,$class,$rules)
 		{
 		$this->_items[$name]['type']='textarea';
 		$this->_items[$name]['name']=$name;
 		$this->_items[$name]['val']=$val;
 		$this->_items[$name]['rows']=$rows;
+		$this->_items[$name]['class']=$class;
 		$this->_items[$name]['cols']=$cols;
 		$this->_items[$name]['rules']=$rules;			
 		}		
@@ -273,7 +274,11 @@ class JPForm
 	// return the HTML code for a textarea with given caracteristics
 	private static function getHTMLtextarea($carac)
 		{
-		return '<textarea name="'.$carac['name'].'" rows="'.$carac['rows'].'" cols="'.$carac['cols'].'">'.$carac['val'].'</textarea>'.PHP_EOL;
+		$r='';
+		$r.='<textarea name="'.$carac['name'].'"';
+		if(!empty($carac['class'])) {$r.=' class="'.$carac['class'].'"';}
+		$r.=' rows="'.$carac['rows'].'" cols="'.$carac['cols'].'">'.$carac['val'].'</textarea>'.PHP_EOL;
+		return $r;
 		}
 		
 	//---------------------------------------------------------------------------------------------------------
