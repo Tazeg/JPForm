@@ -107,7 +107,7 @@ class JPForm
 	// input type HIDDEN
 	//---------------------------------------------------------------------------------------------------------
 	
-	public function addHidden($name,$val,$rules) 
+	public function addHidden($name,$val,$rules='') 
 		{
 		$this->_items[$name]['type']='hidden';
 		$this->_items[$name]['name']=$name;
@@ -157,7 +157,7 @@ class JPForm
 	// input type RADIO
 	//---------------------------------------------------------------------------------------------------------
 		
-	public function addRadio($name,$rules)
+	public function addRadio($name,$rules='')
 		{
 		$this->_items[$name]['type']='radio';
 		$this->_items[$name]['name']=$name;
@@ -260,7 +260,7 @@ class JPForm
 	// TEXTAREA
 	//---------------------------------------------------------------------------------------------------------
 		 	
-	function addTextarea($name,$val,$rows,$cols,$class,$rules)
+	function addTextarea($name,$val,$rows,$cols,$class='',$rules='')
 		{
 		$this->_items[$name]['type']='textarea';
 		$this->_items[$name]['name']=$name;
