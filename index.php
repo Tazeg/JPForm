@@ -27,7 +27,7 @@ $myform->addText('email','',30,10,'','email'); // name,value,size,maxlength,CSSc
 $myform->addFreeText('<br>');
 
 $myform->addFreeText('Your message<br>');
-$myform->addTextarea('message','',10,20,'required'); // name,value,size,maxlength,rules
+$myform->addTextarea('message','',10,20,'required'); // name,value,rows,cols,CSSclass,rules
 $myform->addFreeText('<br>');
 
 $myform->addFreeText('Your web site<br>');
