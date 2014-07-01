@@ -20,12 +20,12 @@ class JPForm
 	// constructor called with i.e. : $myform=new JPForm('index.php','POST');
 	//---------------------------------------------------------------------------------------------------------
 	
-	public function __construct($action,$method)
+	public function __construct($action,$method,$name='')
 		{
 		$method=strtoupper($method);
 		if(!($method=="POST" || $method=="GET")) {echo 'JPForm() : Method must be POST or GET'; return;}
 		$this->_method=$method;
-		$this->_sha1=sha1($action.$method);
+		$this->_sha1=sha1($action.$method.$name);
 		$this->_html='<form class="form-horizontal" action="'.$action.'" method="'.$method.'">'.PHP_EOL;
 		$this->_html.='<input type="hidden" name="JPFormCheck" value="'.$this->_sha1.'">'.PHP_EOL;
 		$this->_errors="";

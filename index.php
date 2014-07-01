@@ -12,7 +12,7 @@ require 'class.JPForm.php';
 date_default_timezone_set('Europe/Paris');
 
 // creating form, adding textfields and rules for each (required|email|numeric|integer|url)
-$myform=new JPForm('index.php','POST');
+$myform=new JPForm('index.php','POST','form1');
 
 $myform->addFreeText('Your name<br>');
 $myform->addText('name','',40,30,'','required'); // name,value,size,maxlength,CSSclass,rules
